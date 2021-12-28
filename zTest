@@ -1,0 +1,30 @@
+#incude <TimerOne.h>
+
+int pwm1 = 9;
+
+float Hz = 1;
+float period = 1000000;
+
+int32_t freq = (1/Hz)*power; 
+
+unsigned long lastCheckTime = 0;
+
+void setup()
+{
+  Serial.begin(96000);
+  
+  pinMode(pwm1, OUTPUT);
+  
+  Timer1.initialize(Freq);
+  Timer1.pwm(9,75);
+  
+}
+
+void loop()
+{
+   int32_hld = (1/Hz)*power;
+   Timer.initialize(hld);
+   Timer1.pwm(9,5);
+   lastCheckedTime = millis();
+   Hz += 1;
+}
