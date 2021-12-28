@@ -22,6 +22,7 @@ void setup()
 
 void loop()
 {
+
   if (millis()-lastCheckedTimer > period)
   {
     int32_hld = (1/Hz)*power;
@@ -30,4 +31,5 @@ void loop()
     lastCheckedTime = millis();
     Hz += 1;
   }
+  
 }
