@@ -22,9 +22,12 @@ void setup()
 
 void loop()
 {
-   int32_hld = (1/Hz)*power;
-   Timer.initialize(hld);
-   Timer1.pwm(9,5);
-   lastCheckedTime = millis();
-   Hz += 1;
+  if (millis()-lastCheckedTimer > period)
+  {
+    int32_hld = (1/Hz)*power;
+    Timer.initialize(hld);
+    Timer1.pwm(9,5);
+    lastCheckedTime = millis();
+    Hz += 1;
+  }
 }
