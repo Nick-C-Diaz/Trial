@@ -1,35 +1,59 @@
-#incude <TimerOne.h>
+#incude <TimerOne.h> //Square Wave 
+#include <SPI.h> //Digital Pot
 
-int pwm1 = 9;
+#define CS 10; // Master to Slave pin on the digital Pot 
+#define RPM_Pin 9; //For the Timer library square wave has to be produced through pin 9 
 
-float Hz = 1;
-float period = 1000000;
+byte address = 0x00; // Digital Pot Address Point
 
-int32_t freq = (1/Hz)*power; 
-
-unsigned long lastCheckTime = 0;
+// Variables used in the void loop section 
+int x = 0, int LastCheckedTime1 = 0; int LastCheckedTime2 = 0; 
 
 void setup()
 {
   Serial.begin(96000);
   
-  pinMode(pwm1, OUTPUT);
+  pinMode(RPM_pin, OUTPUT);
+  pinMode(CS, OUTPUT);
   
-  Timer1.initialize(Freq);
-  Timer1.pwm(9,75);
+  // Initial Outputs for the RPM and Dig Pot 
+  SPI.begin();
+  digitalPotWrite(0);
+  
+  Timer1.initialize(0);
+  Timer1.pwm(RPM_pin, 50); // determines what pin to output the wave form and gives it a 50% duty cycle
   
 }
 
 void loop()
 {
 
-  if (millis()-lastCheckedTimer > period)
+  if (millis()-lastCheckedTime1 > period)
   {
     int32_hld = (1/Hz)*power;
     Timer.initialize(hld);
-    Timer1.pwm(9,5);
-    lastCheckedTime = millis();
+    Timer1.pwm(9,50);
+    lastCheckedTime1 = millis();
     Hz += 1;
   }
   
+  if (millis()-lastCheckedTime2 > period)
+  {
+    int i = (2.91*x)+9; // used for the relation between the gear display and wiper placement 
+                       //note:: this value comes from the average of the slope but has some errors
+    digitalPotWrite(round(i);
+    lastCheckedTime2 = millis();
+    x += 1;
+  }
+  
 }
+
+// called by the Digital Pot to address the sitching of the wiper
+int digitalPotWrite(int V)
+{
+  digitalWrite(CS,LOW)'
+  SPI.transfer(address);
+  SPI.transfer(V);
+  digitalWrite(CS,HIGH)
+}
+
